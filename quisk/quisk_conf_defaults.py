@@ -1043,18 +1043,19 @@ digital_xmlrpc_url = "http://localhost:7362"
 
 
 ################ Keys
-# You can define two hot keys that when pressed simultaneously, will push the PTT button.
-# If you want only one hot key, set hot_key_ptt2 to None.  Use any of the wx.WXK_* key codes,
-# or the ord() of the letter.  Do not choose hot keys that interfere with other features
-# on your system; for example, system menus or the frequency entry box.
-hot_key_ptt1 = None
-hot_key_ptt2 = None
-#hot_key_ptt1 = wx.WXK_CONTROL
-#hot_key_ptt1 = wx.WXK_SHIFT
-#hot_key_ptt1 = wx.WXK_ALT
-#hot_key_ptt1 = wx.WXK_F5
-#hot_key_ptt2 = ord(' ')
-#hot_key_ptt2 = ord('A')
+# You can define two hot keys that when pressed simultaneously, will send commands to quisk buttons.
+# Use any of the wx.WXK_* key codes, or the ord() of the letter.  Do not choose hot keys that
+# interfere with other features on your system; for example, system menus or the frequency entry box.
+hot_key_base = None
+hot_key_ptt = None
+hot_key_fup = None
+hot_key_fdown = None
+#hot_key_ptt = wx.WXK_CONTROL
+#hot_key_ptt = wx.WXK_SHIFT
+#hot_key_ptt = wx.WXK_ALT
+#hot_key_ptt = wx.WXK_F5
+#hot_key_ptt = ord(' ')
+#hot_key_ptt = ord('A')
 
 # This determines what happens when you tune by dragging the mouse.  The correct
 # choice depends on how your hardware performs tuning.  You may want to use a

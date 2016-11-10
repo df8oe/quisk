@@ -29,7 +29,7 @@ class Hardware(BaseHardware):
       self.repeater_delay = 0.25
     self.repeater_time0 = 0			# time of repeater change in frequency
     # Create the proper broadcast address for rx_udp_ip.
-    if False and self.conf.rx_udp_ip:
+    if True and self.conf.rx_udp_ip:
       nm = self.conf.rx_udp_ip_netmask.split('.')
       ip = self.conf.rx_udp_ip.split('.')
       nm = map(int, nm)

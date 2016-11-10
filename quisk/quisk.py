@@ -5118,8 +5118,8 @@ The new code supports multiple corrections per band.""")
         if time.time() > self.file_play_timer - self.file_play_repeat + 0.25:	# pause to allow key state to change
           self.TurnOffFilePlay()
           ptt = False
-      if conf.hot_key_ptt1:
-        hot_key = wx.GetKeyState(conf.hot_key_ptt1) and (conf.hot_key_ptt2 is None or wx.GetKeyState(conf.hot_key_ptt2))
+      if conf.hot_key_base:
+        hot_key = wx.GetKeyState(conf.hot_key_base) and (wx.GetKeyState(conf.hot_key_ptt))
         if hot_key:
           self.hot_key_ptt_on = True
           self.TurnOffFilePlay()
