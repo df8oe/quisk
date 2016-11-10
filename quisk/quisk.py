@@ -5084,6 +5084,48 @@ The new code supports multiple corrections per band.""")
           # print 'Remove', client.address
           break
   def OnReadSound(self):	# called at frequent intervals
+	# tune frequency up and down via microphone DF8OE
+    if conf.hot_key_base:
+       hot_key = wx.GetKeyState(conf.hot_key_base) and (wx.GetKeyState(conf.hot_key_fup) or wx.GetKeyState(conf.hot_key_fdown))
+       if hot_key:
+          if conf.freq_spacing:
+             wm = conf.freq_spacing
+          else:
+             wm = 10		# Round frequency like on mouse wheel
+          if wx.GetKeyState(conf.hot_key_fdown): # direction of tuning...
+             wm = -wm
+#          if self.split_unavailable:
+#             self.mouse_is_rx = False
+#          elif application.split_rxtx and application.split_locktx:
+#             self.mouse_is_rx = True
+#          elif self.display.tune_rx and abs(x - self.display.tune_tx) > abs(x - self.display.tune_rx):
+#             self.mouse_is_rx = True
+#          else:
+#             self.mouse_is_rx = False
+#          if self.mouse_is_rx:
+#           if True:
+          freq = application.rxFreq + self.VFO + wm
+          if conf.freq_spacing:
+             freq = self.FreqRound(freq, 0)
+          elif freq >= 0:
+             freq = freq // wm * wm
+          else:		# freq can be negative when the VFO is zero
+             freq = - (- freq // wm * wm)
+          tune = freq - self.VFO
+          application.rxFreq = tune
+          application.screen.SetTxFreq(self.rxFreq, tune)
+          QS.set_tune(tune + application.ritFreq, self.rxFreq)
+#          else:
+#             freq = self.txFreq + self.VFO + wm
+#             if conf.freq_spacing:
+#               freq = self.FreqRound(freq, 0)
+#             elif freq >= 0:
+#               freq = freq // wm * wm
+#             else:		# freq can be negative when the VFO is zero
+#               freq = - (- freq // wm * wm)
+#             tune = freq - self.VFO
+          self.ChangeHwFrequency(tune, self.VFO, 'MouseWheel', None)
+
     if conf.do_repeater_offset:
       hold = QS.tx_hold_state(-1)
       if hold == 2:	# Tx is being held for an FM repeater TX frequency shift
