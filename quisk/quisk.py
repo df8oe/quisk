@@ -5105,7 +5105,7 @@ The new code supports multiple corrections per band.""")
           application.rxFreq = tune
           application.screen.SetTxFreq(self.rxFreq, tune)
           QS.set_tune(tune + application.ritFreq, self.rxFreq)
-          self.ChangeHwFrequency(tune, self.VFO, 'MouseWheel', None)
+          self.ChangeHwFrequency(tune, self.VFO, 'Hotkey up/down', None)
     if conf.do_repeater_offset:
       hold = QS.tx_hold_state(-1)
       if hold == 2:	# Tx is being held for an FM repeater TX frequency shift

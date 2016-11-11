@@ -1,0 +1,4 @@
+quisk/build
+*.o
+*~
+*.pyc
