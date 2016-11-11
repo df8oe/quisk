@@ -220,7 +220,7 @@ digital_tx_level = 20
 # If you use the HiQSDR hardware, set these:
 # The HiQSDR_BandDict sets the preselect (4 bits) on the X1 connector.
 HiQSDR_BandDict = {
-	'160':1, '80':2, '40':3, '30':4, '20':5, '15':6, '17':7,
+	'2200':1,'630':1,'160':1, '80':2, '40':3, '30':4, '20':5, '15':6, '17':7,
 	'12':8, '10':9, '6':10, '500k':11, '137k':12 }
 
 ## cw_delay                 CW Delay, integer
@@ -351,7 +351,7 @@ hermes_board_id = -1
 ## Hermes_BandDict		Hermes Bus, dict
 # The Hermes_BandDict sets the 7 bits on the J16 connector.  The default is 0x00.
 Hermes_BandDict = {
-	'160':0b0000001, '80':0b0000010, '60':0b0000100, '40':0b0001000, '30':0b0010000, '20':0b0100000, '15':0b1000000}
+	'2200':0b0000001,'630':0b0000001,'160':0b0000001, '80':0b0000010, '60':0b0000100, '40':0b0001000, '30':0b0010000, '20':0b0100000, '15':0b1000000}
 
 
 
@@ -479,7 +479,7 @@ digital_tx_level = 20
 ## HiQSDR_BandDict		IO Bus, dict
 # This sets the preselect (4 bits) on the X1 connector.
 HiQSDR_BandDict = {
-	'160':1, '80':2, '40':3, '30':4, '20':5, '15':6, '17':7,
+	'2200':1,'160':1,'630':1, '80':2, '40':3, '30':4, '20':5, '15':6, '17':7,
 	'12':8, '10':9, '6':10, '500k':11, '137k':12 }
 
 ## cw_delay                 CW Delay, integer
@@ -1043,19 +1043,20 @@ digital_xmlrpc_url = "http://localhost:7362"
 
 
 ################ Keys
-# You can define two hot keys that when pressed simultaneously, will send commands to quisk buttons.
-# Use any of the wx.WXK_* key codes, or the ord() of the letter.  Do not choose hot keys that
-# interfere with other features on your system; for example, system menus or the frequency entry box.
-hot_key_base = None
-hot_key_ptt = None
-hot_key_fup = None
-hot_key_fdown = None
-#hot_key_ptt = wx.WXK_CONTROL
-#hot_key_ptt = wx.WXK_SHIFT
-#hot_key_ptt = wx.WXK_ALT
-#hot_key_ptt = wx.WXK_F5
-#hot_key_ptt = ord(' ')
-#hot_key_ptt = ord('A')
+# You can define two hot keys that when pressed simultaneously, will push the PTT button.
+# If you want only one hot key, set hot_key_ptt2 to None.  Use any of the wx.WXK_* key codes,
+# or the ord() of the letter.  Do not choose hot keys that interfere with other features
+# on your system; for example, system menus or the frequency entry box.
+hot_key_base = ord('@')
+hot_key_ptt = ord('P')
+hot_key_fup = ord('U')
+hot_key_fdown = ord('D')
+#hot_key_ptt1 = wx.WXK_CONTROL
+#hot_key_ptt1 = wx.WXK_SHIFT
+#hot_key_ptt1 = wx.WXK_ALT
+#hot_key_ptt1 = wx.WXK_F5
+#hot_key_ptt2 = ord(' ')
+#hot_key_ptt2 = ord('A')
 
 # This determines what happens when you tune by dragging the mouse.  The correct
 # choice depends on how your hardware performs tuning.  You may want to use a
@@ -1622,6 +1623,13 @@ BandPlan = [
   #[      0, CW], [  50000, eCW], [ 100000, Phone], [ 150000, ePhone], [ 200000, Data], [ 250000, DxData], [ 300000, RTTY], [ 350000, SSTV],
   #[ 400000, AM], [ 450000, Packet], [ 500000, Beacons], [ 550000, Satellite], [ 600000, Repeater], [ 650000, RepInput], [ 700000, Simplex],
   #[ 750000, Other], [ 800000, Special], [ 850000, None],
+  # 2200 meters
+  [ 135700, CW],
+  [ 137800, None],
+  # 630 meters
+  [ 472000, CW],
+  [ 475000, Data],
+  [ 479000, None],
   # 160 meters
   [ 1800000, Data],
   [ 1809000, Other],
@@ -1786,11 +1794,18 @@ BandPlan = [
 # For each band, this dictionary gives the lower and upper band edges.  Frequencies
 # outside these limits will not be remembered as the last frequency in the band.
 BandEdge = {
-	'160':( 1800000,  2000000),	'80' :( 3500000,  4000000),
-	'60' :( 5300000,  5430000),	'40' :( 7000000,  7300000),
-	'30' :(10100000, 10150000),	'20' :(14000000, 14350000),	
-	'17' :(18068000, 18168000), '15' :(21000000, 21450000),
-	'12' :(24890000, 24990000),	'10' :(28000000, 29700000),
+	'2200':( 135700,  137800),
+	'630':( 472000,  479000),
+	'160':( 1800000,  2000000),
+	'80' :( 3500000,  4000000),
+	'60' :( 5300000,  5430000),
+	'40' :( 7000000,  7300000),
+	'30' :(10100000, 10150000),
+	'20' :(14000000, 14350000),
+	'17' :(18068000, 18168000),
+	'15' :(21000000, 21450000),
+	'12' :(24890000, 24990000),
+	'10' :(28000000, 29700000),
 	'6'     :(  50000000,   54000000),
 	'4'     :(  70000000,   70500000),
 	'2'     :( 144000000,  148000000),
@@ -1818,7 +1833,7 @@ bandTime = [
 # Note that the 60 meter band and the Time band have buttons that support
 # multiple presses.
 bandLabels = [
-	'Audio', '160', '80', ('60',) * 5, '40', '30', '20', '17',
+	'Audio', '2200', '630', '160', '80', ('60',) * 5, '40', '30', '20', '17',
 	'15', '12', '10', ('Time',) * len(bandTime)]
 
 ## bandTransverterOffset	Transverter Offset, dict
@@ -1840,7 +1855,7 @@ filter_display = 1	# Display the filter bandwidth on the graph screen; 0 or 1; t
 # frequency as an offset from the center frequency, and the mode.  This is
 # no longer too useful because the persistent_state feature saves and then
 # overwrites these values anyway.
-bandState = {'Audio':(0, 0, 'LSB'),
+bandState = {'Audio':(0, 0, 'LSB'), '2200':( 136000, -10000, 'LSB'),'630':( 473000, -10000, 'LSB'),
       '160':( 1890000, -10000, 'LSB'), '80' :( 3660000, -10000, 'LSB'),
       '60' :( 5370000,   1500, 'USB'), '40' :( 7180000, -5000, 'LSB'),  '30':(10120000, -10000, 'CWL'),
       'Time':( 5000000, 0, 'AM')}
