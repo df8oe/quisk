@@ -3182,6 +3182,7 @@ class App(wx.App):
     if conf.hamlib_port:
       try:
         self.hamlib_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.hamlib_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.hamlib_socket.bind((conf.hamlib_ip, conf.hamlib_port))
         self.hamlib_socket.settimeout(0.0)
         self.hamlib_socket.listen(0)	# listen for TCP connections from multiple clients
